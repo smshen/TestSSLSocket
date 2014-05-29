@@ -1,0 +1,23 @@
+
+//默认路径
+/Users/ice/shao/temp/keys/
+
+//创建一个客户端 keystore 文件
+keytool -genkey -alias sslclient -keystore /Users/ice/shao/temp/keys/sslclientkeys
+
+//将客户端 keystore 文件导出成证书格式
+keytool -export -alias sslclient -keystore /Users/ice/shao/temp/keys/sslclientkeys -file /Users/ice/shao/temp/keys/sslclient.cer
+
+//创建一个服务器端 keystore 文件
+keytool -genkey -alias sslserver -keystore /Users/ice/shao/temp/keys/sslserverkeys
+
+//将服务器端 keystore 文件导出成证书格式
+keytool -export -alias sslserver -keystore /Users/ice/shao/temp/keys/sslserverkeys -file /Users/ice/shao/temp/keys/sslserver.cer
+
+//将客户端证书导入到服务器端受信任的 keystore 中
+keytool -import -alias sslclient -keystore sslservertrust -file /Users/ice/shao/temp/keys/sslclient.cer
+
+//将服务器端证书导入到客户端受信任的 keystore 中
+keytool -import -alias sslserver -keystore sslclienttrust -file /Users/ice/shao/temp/keys/sslserver.cer
+
+//以上步骤执行完成,请将sslclientkeys/sslserverkeys/sslservertrust/sslclienttrust拷贝到项目/src根目录下,运行server和client即可
